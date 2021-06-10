@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ArriendoDeAutosASP.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace ArriendoDeAutosASP.Data
             : base(options)
         {
         }
+        public DbSet<Vehicle> Vehicle { get; set; }
     }
 }
