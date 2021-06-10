@@ -6,71 +6,57 @@
 }
 
 <div class="container">
+    @if (TempData["mssg"] != null)
+            {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["mssg"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+            }
+
     <div class="row">
         <div class="col-sm-6">
             <h3>Available</h3>
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Vehicle">Add Vehicle</a>
+            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Vehicles">Add Vehicle</a>
         </div>
     </div>
 
     <div class="row">
         @if (Model.Count() > 0)
             {
-            <table class="table table-border table-striped">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <td>@Html.DisplayNameFor(m => m.Model)</td>
-                    </tr>
-                    <tr>
                         <td>@Html.DisplayNameFor(m => m.Brand)</td>
-                    </tr>
-                    <tr>
                         <td>@Html.DisplayNameFor(m => m.Type)</td>
-                    </tr>
-                    <tr>
                         <td>@Html.DisplayNameFor(m => m.HP)</td>
-                    </tr>
-                    <tr>
                         <td>@Html.DisplayNameFor(m => m.Price)</td>
-                    </tr>
-                    <tr>
                         <td>@Html.DisplayNameFor(m => m.ModelYear)</td>
-                    </tr>
-                    <tr>
                         <td>Actions</td>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>@item.Model</td>
-                        </tr>
-                        <tr>
-                            <td>@item.Brand</td>
-                        </tr>
-                        <tr>
-                            <td>@item.Type</td>
-                        </tr>
-                        <tr>
-                            <td>@item.HP</td>
-                        </tr>
-                        <tr>
-                            <td>@item.Price</td>
-                        </tr>
-                        <tr>
-                            <td>@item.ModelYear</td>
-                        </tr>
-                        <tr>
+                    <tr>
+                        <td>@item.Model</td>
+                        <td>@item.Brand</td>
+                        <td>@item.Type</td>
+                        <td>@item.HP</td>
+                        <td>@item.Price</td>
+                        <td>@item.ModelYear</td>
+                        <td>
                             <a asp-controller="Vehicle" asp-action="Edit" asp-route-id="@item.Id"
                                class="btn btn-warning">Edit</a>
-                        </tr>
-                        <tr>
                             <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@item.Id"
                                class="btn btn-danger">Delete</a>
-                        </tr>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>  

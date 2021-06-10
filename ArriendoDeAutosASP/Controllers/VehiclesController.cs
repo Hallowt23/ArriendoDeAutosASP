@@ -16,15 +16,30 @@ namespace ArriendoDeAutosASP.Controllers
         {
             _context = context;
         }
-        //Lista Get
+        //Get List
         public IActionResult Index()
         {
             IEnumerable<Vehicle> listVehicle = _context.Vehicle;
             return View(listVehicle);
         }
-        //Create Post
+        //View Create
         public IActionResult Create()
         {
+            return View();
+        }
+
+        //Create Post
+        [HttpPost]
+        public IActionResult Create(Vehicle vehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Vehicle.Add(vehicle);
+                _context.SaveChanges();
+                TempData["mssg"] = "Successfully added to the database";
+
+                return RedirectToAction("Index");
+            }
             return View();
         }
     }
