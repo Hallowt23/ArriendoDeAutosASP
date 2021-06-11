@@ -21,7 +21,7 @@
             <h3>Available</h3>
         </div>
         <div class="col-sm-6">
-            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Vehicles">Add Vehicle</a>
+            <a class="btn btn-success d-block" asp-action="CreateVehicle" asp-controller="Vehicles">Add Vehicle</a>
         </div>
     </div>
 
@@ -51,9 +51,9 @@
                         <td>@item.Price</td>
                         <td>@item.ModelYear</td>
                         <td>
-                            <a asp-controller="Vehicles" asp-action="Edit" asp-route-id="@item.Id"
+                            <a asp-controller="Vehicles" asp-action="EditVehicle" asp-route-id="@item.Id"
                                class="btn btn-warning">Edit</a>
-                            <a asp-controller="Vehicles" asp-action="Delete" asp-route-id="@item.Id"
+                            <a asp-controller="Vehicles" asp-action="DeleteVehicle" asp-route-id="@item.Id"
                                class="btn btn-danger">Delete</a>
                         </td>
                     </tr>

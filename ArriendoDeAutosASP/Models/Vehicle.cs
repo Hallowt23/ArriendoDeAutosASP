@@ -12,7 +12,7 @@ namespace ArriendoDeAutosASP.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 3)]
+        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 2)]
         [Display(Name = "Model")]
         public string Model { get; set; }
 
