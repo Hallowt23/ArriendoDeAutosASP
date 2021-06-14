@@ -15,5 +15,6 @@ namespace ArriendoDeAutosASP.Data
         }
         public DbSet<Vehicle> Vehicle { get; set; }
         public DbSet<Office> Office { get; set; }
+        public DbSet<Rental> Rental { get; set; }
     }
 }

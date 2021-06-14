@@ -54,6 +54,48 @@ namespace ArriendoDeAutosASP.Data.Migrations
                     b.ToTable("Office");
                 });
 
+            modelBuilder.Entity("ArriendoDeAutosASP.Models.Rental", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HP")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("OfficeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PickUp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Rut")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rental");
+                });
+
             modelBuilder.Entity("ArriendoDeAutosASP.Models.Vehicle", b =>
                 {
                     b.Property<int>("Id")
@@ -290,6 +332,25 @@ namespace ArriendoDeAutosASP.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ArriendoDeAutosASP.Models.Rental", b =>
+                {
+                    b.HasOne("ArriendoDeAutosASP.Models.Office", "Office")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ArriendoDeAutosASP.Models.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Office");
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
