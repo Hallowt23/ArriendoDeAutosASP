@@ -14,25 +14,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClientId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Client)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicle)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OfficeId)
+                @Html.DisplayNameFor(model => model.Office)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Office)
+                @Html.DisplayNameFor(model => model.Days)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Note)
@@ -47,25 +38,24 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientId)
-            </td>
-            <td>
+                @Html.DisplayFor(modelItem => item.Client.Rut) /
                 @Html.DisplayFor(modelItem => item.Client.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarId)
+                @Html.DisplayFor(modelItem => item.Client.LastName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Vehicle.Brand)
+                @Html.DisplayFor(modelItem => item.Vehicle.Model) /
+                @Html.DisplayFor(modelItem => item.Vehicle.Price)
+                @{
+                    int x = item.Vehicle.Price * item.Days;
+                }Total: $@x
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OfficeId)
-            </td>
-            <td>
+                @Html.DisplayFor(modelItem => item.Office.City),
                 @Html.DisplayFor(modelItem => item.Office.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Days)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Note)
@@ -76,7 +66,8 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                <a asp-controller="Bills" asp-action="GenerateBill" asp-route-id="@item.Id">Pay</a>
             </td>
         </tr>
 }

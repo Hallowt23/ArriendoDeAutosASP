@@ -10,23 +10,23 @@ using ArriendoDeAutosASP.Models;
 
 namespace ArriendoDeAutosASP.Controllers
 {
-    public class RentalsController : Controller
+    public class BillsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public RentalsController(ApplicationDbContext context)
+        public BillsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Rentals
+        // GET: Bills
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Rental.Include(r => r.Client).Include(r => r.Office).Include(r => r.Vehicle);
+            var applicationDbContext = _context.Bill.Include(b => b.Rental);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Rentals/Details/5
+        // GET: Bills/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,48 +34,42 @@ namespace ArriendoDeAutosASP.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Rental
-                .Include(r => r.Client)
-                .Include(r => r.Office)
-                .Include(r => r.Vehicle)
+            var bill = await _context.Bill
+                .Include(b => b.Rental)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (rental == null)
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(rental);
+            return View(bill);
         }
 
-        // GET: Rentals/Create
+        // GET: Bills/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "Rut");
-            ViewData["OfficeId"] = new SelectList(_context.Office, "Id", "City");
-            ViewData["VehicleId"] = new SelectList(_context.Vehicle, "Id", "Model", "Price");
+            ViewData["RentId"] = new SelectList(_context.Rental, "Id", "Id");
             return View();
         }
 
-        // POST: Rentals/Create
+        // POST: Bills/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,VehicleId,OfficeId,Days,Note,PickUp")] Rental rental)
+        public async Task<IActionResult> Create([Bind("Id,RentId,Iva,Total,Date,Active")] Bill bill)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rental);
+                _context.Add(bill);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "FirstName", rental.ClientId);
-            ViewData["OfficeId"] = new SelectList(_context.Office, "Id", "Address", rental.OfficeId);
-            ViewData["VehicleId"] = new SelectList(_context.Vehicle, "Id", "Brand", rental.VehicleId);
-            return View(rental);
+            ViewData["RentId"] = new SelectList(_context.Rental, "Id", "Id", bill.RentId);
+            return View(bill);
         }
 
-        // GET: Rentals/Edit/5
+        // GET: Bills/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,25 +77,23 @@ namespace ArriendoDeAutosASP.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Rental.FindAsync(id);
-            if (rental == null)
+            var bill = await _context.Bill.FindAsync(id);
+            if (bill == null)
             {
                 return NotFound();
             }
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "FirstName", rental.ClientId);
-            ViewData["OfficeId"] = new SelectList(_context.Office, "Id", "Address", rental.OfficeId);
-            ViewData["VehicleId"] = new SelectList(_context.Vehicle, "Id", "Brand", rental.VehicleId);
-            return View(rental);
+            ViewData["RentId"] = new SelectList(_context.Rental, "Id", "Id", bill.RentId);
+            return View(bill);
         }
 
-        // POST: Rentals/Edit/5
+        // POST: Bills/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,VehicleId,OfficeId,Days,Note,PickUp")] Rental rental)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RentId,Iva,Total,Date,Active")] Bill bill)
         {
-            if (id != rental.Id)
+            if (id != bill.Id)
             {
                 return NotFound();
             }
@@ -110,12 +102,12 @@ namespace ArriendoDeAutosASP.Controllers
             {
                 try
                 {
-                    _context.Update(rental);
+                    _context.Update(bill);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RentalExists(rental.Id))
+                    if (!BillExists(bill.Id))
                     {
                         return NotFound();
                     }
@@ -126,13 +118,11 @@ namespace ArriendoDeAutosASP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Client, "Id", "FirstName", rental.ClientId);
-            ViewData["OfficeId"] = new SelectList(_context.Office, "Id", "Address", rental.OfficeId);
-            ViewData["VehicleId"] = new SelectList(_context.Vehicle, "Id", "Brand", rental.VehicleId);
-            return View(rental);
+            ViewData["RentId"] = new SelectList(_context.Rental, "Id", "Id", bill.RentId);
+            return View(bill);
         }
 
-        // GET: Rentals/Delete/5
+        // GET: Bills/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,33 +130,31 @@ namespace ArriendoDeAutosASP.Controllers
                 return NotFound();
             }
 
-            var rental = await _context.Rental
-                .Include(r => r.Client)
-                .Include(r => r.Office)
-                .Include(r => r.Vehicle)
+            var bill = await _context.Bill
+                .Include(b => b.Rental)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (rental == null)
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(rental);
+            return View(bill);
         }
 
-        // POST: Rentals/Delete/5
+        // POST: Bills/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var rental = await _context.Rental.FindAsync(id);
-            _context.Rental.Remove(rental);
+            var bill = await _context.Bill.FindAsync(id);
+            _context.Bill.Remove(bill);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RentalExists(int id)
+        private bool BillExists(int id)
         {
-            return _context.Rental.Any(e => e.Id == id);
+            return _context.Bill.Any(e => e.Id == id);
         }
     }
 }

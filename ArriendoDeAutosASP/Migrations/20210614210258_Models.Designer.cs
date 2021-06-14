@@ -4,20 +4,51 @@ using ArriendoDeAutosASP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ArriendoDeAutosASP.Data.Migrations
+namespace ArriendoDeAutosASP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210614210258_Models")]
+    partial class Models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ArriendoDeAutosASP.Models.Bill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Active")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Iva")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RentId");
+
+                    b.ToTable("Bill");
+                });
 
             modelBuilder.Entity("ArriendoDeAutosASP.Models.Client", b =>
                 {
@@ -95,17 +126,19 @@ namespace ArriendoDeAutosASP.Data.Migrations
             modelBuilder.Entity("ArriendoDeAutosASP.Models.Rental", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CarId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Days")
+                        .HasColumnType("int");
+
                     b.Property<string>("Note")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("OfficeId")
                         .HasColumnType("int");
@@ -113,10 +146,16 @@ namespace ArriendoDeAutosASP.Data.Migrations
                     b.Property<DateTime>("PickUp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Total")
+                    b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("OfficeId");
+
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Rental");
                 });
@@ -364,23 +403,34 @@ namespace ArriendoDeAutosASP.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ArriendoDeAutosASP.Models.Bill", b =>
+                {
+                    b.HasOne("ArriendoDeAutosASP.Models.Rental", "Rental")
+                        .WithMany()
+                        .HasForeignKey("RentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rental");
+                });
+
             modelBuilder.Entity("ArriendoDeAutosASP.Models.Rental", b =>
                 {
                     b.HasOne("ArriendoDeAutosASP.Models.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ArriendoDeAutosASP.Models.Office", "Office")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("OfficeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ArriendoDeAutosASP.Models.Vehicle", "Vehicle")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
