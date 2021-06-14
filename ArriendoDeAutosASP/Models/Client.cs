@@ -13,7 +13,7 @@ namespace ArriendoDeAutosASP.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Required, numbers only.")]
-        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 15)]
+        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 5)]
         [Display(Name = "Rut")]
         public string Rut { get; set; }
 

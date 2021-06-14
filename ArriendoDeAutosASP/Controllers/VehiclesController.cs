@@ -1,10 +1,12 @@
-﻿using ArriendoDeAutosASP.Data;
-using ArriendoDeAutosASP.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ArriendoDeAutosASP.Data;
+using ArriendoDeAutosASP.Models;
 
 namespace ArriendoDeAutosASP.Controllers
 {
@@ -16,89 +18,136 @@ namespace ArriendoDeAutosASP.Controllers
         {
             _context = context;
         }
-        //Get List
-        public IActionResult IndexVehicle()
-        {
-            IEnumerable<Vehicle> listVehicle = _context.Vehicle;
-            return View(listVehicle);
-        }
-        //View Create
-        public IActionResult CreateVehicle()
-        {
-            return View();
-        }
-        //Create Post
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddVehicle(Vehicle vehicle)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Vehicle.Add(vehicle);
-                _context.SaveChanges();
-                TempData["mssg"] = "Successfully added to the database";
 
-                return RedirectToAction("IndexVehicle");
-            }
-            return View();
-        }
-        //View Edit
-        public IActionResult EditVehicle(int? id)
+        // GET: Vehicles
+        public async Task<IActionResult> Index()
         {
-            if (id == null || id == 0)
+            return View(await _context.Vehicle.ToListAsync());
+        }
+
+        // GET: Vehicles/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
-            var vehicle = _context.Vehicle.Find(id);
+
+            var vehicle = await _context.Vehicle
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
+
+            return View(vehicle);
+        }
+
+        // GET: Vehicles/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Vehicles/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Model,Brand,Type,HP,Price,LiscensePlate,ModelYear")] Vehicle vehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(vehicle);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(vehicle);
+        }
+
+        // GET: Vehicles/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehicle = await _context.Vehicle.FindAsync(id);
             if (vehicle == null)
             {
                 return NotFound();
             }
             return View(vehicle);
         }
-        //Edit Update
+
+        // POST: Vehicles/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateVehicle(Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Model,Brand,Type,HP,Price,LiscensePlate,ModelYear")] Vehicle vehicle)
         {
+            if (id != vehicle.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Vehicle.Update(vehicle);
-                _context.SaveChanges();
-                TempData["mssg"] = "Success";
-
-                return RedirectToAction("IndexVehicle");
-            }
-            return View();
-        }
-        //View Delete
-        public IActionResult DeleteVehicle(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var vehicle = _context.Vehicle.Find(id);
-            if (vehicle == null)
-            {
-                return NotFound();
+                try
+                {
+                    _context.Update(vehicle);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!VehicleExists(vehicle.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(vehicle);
         }
-        //Delete Vehicle
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult RemoveVehicle(int? id)
+
+        // GET: Vehicles/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            var vehicle = _context.Vehicle.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehicle = await _context.Vehicle
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null)
             {
                 return NotFound();
             }
+
+            return View(vehicle);
+        }
+
+        // POST: Vehicles/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var vehicle = await _context.Vehicle.FindAsync(id);
             _context.Vehicle.Remove(vehicle);
-            _context.SaveChanges();
-            TempData["mssg"] = "Deleted";
-            return RedirectToAction("IndexVehicle");
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool VehicleExists(int id)
+        {
+            return _context.Vehicle.Any(e => e.Id == id);
         }
     }
 }

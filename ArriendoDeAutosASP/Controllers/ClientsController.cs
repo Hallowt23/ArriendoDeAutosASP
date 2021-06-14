@@ -10,22 +10,22 @@ using ArriendoDeAutosASP.Models;
 
 namespace ArriendoDeAutosASP.Controllers
 {
-    public class OfficesController : Controller
+    public class ClientsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public OfficesController(ApplicationDbContext context)
+        public ClientsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Offices
+        // GET: Clients
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Office.ToListAsync());
+            return View(await _context.Client.ToListAsync());
         }
 
-        // GET: Offices/Details/5
+        // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace ArriendoDeAutosASP.Controllers
                 return NotFound();
             }
 
-            var office = await _context.Office
+            var client = await _context.Client
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (office == null)
+            if (client == null)
             {
                 return NotFound();
             }
 
-            return View(office);
+            return View(client);
         }
 
-        // GET: Offices/Create
+        // GET: Clients/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Offices/Create
+        // POST: Clients/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Country,City,Address,PhoneNumber,Mannager")] Office office)
+        public async Task<IActionResult> Create([Bind("Id,Rut,FirstName,LastName,Liscense,Sex,BirthDay")] Client client)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(office);
+                _context.Add(client);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(office);
+            return View(client);
         }
 
-        // GET: Offices/Edit/5
+        // GET: Clients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace ArriendoDeAutosASP.Controllers
                 return NotFound();
             }
 
-            var office = await _context.Office.FindAsync(id);
-            if (office == null)
+            var client = await _context.Client.FindAsync(id);
+            if (client == null)
             {
                 return NotFound();
             }
-            return View(office);
+            return View(client);
         }
 
-        // POST: Offices/Edit/5
+        // POST: Clients/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Country,City,Address,PhoneNumber,Mannager")] Office office)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Rut,FirstName,LastName,Liscense,Sex,BirthDay")] Client client)
         {
-            if (id != office.Id)
+            if (id != client.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace ArriendoDeAutosASP.Controllers
             {
                 try
                 {
-                    _context.Update(office);
+                    _context.Update(client);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OfficeExists(office.Id))
+                    if (!ClientExists(client.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace ArriendoDeAutosASP.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(office);
+            return View(client);
         }
 
-        // GET: Offices/Delete/5
+        // GET: Clients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace ArriendoDeAutosASP.Controllers
                 return NotFound();
             }
 
-            var office = await _context.Office
+            var client = await _context.Client
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (office == null)
+            if (client == null)
             {
                 return NotFound();
             }
 
-            return View(office);
+            return View(client);
         }
 
-        // POST: Offices/Delete/5
+        // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var office = await _context.Office.FindAsync(id);
-            _context.Office.Remove(office);
+            var client = await _context.Client.FindAsync(id);
+            _context.Client.Remove(client);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OfficeExists(int id)
+        private bool ClientExists(int id)
         {
-            return _context.Office.Any(e => e.Id == id);
+            return _context.Client.Any(e => e.Id == id);
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using ArriendoDeAutosASP.Data;
-using ArriendoDeAutosASP.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using ArriendoDeAutosASP.Data;
+using ArriendoDeAutosASP.Models;
 
 namespace ArriendoDeAutosASP.Controllers
 {
@@ -16,89 +18,155 @@ namespace ArriendoDeAutosASP.Controllers
         {
             _context = context;
         }
-        //Get List
-        public IActionResult IndexVehicle()
+
+        // GET: Rentals
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Rental> listRental = _context.Rental;
-            return View(listRental);
+            var applicationDbContext = _context.Rental.Include(r => r.Client).Include(r => r.Office).Include(r => r.Vehicle);
+            return View(await applicationDbContext.ToListAsync());
         }
-        //View Create
-        public IActionResult CreateRental()
+
+        // GET: Rentals/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rental = await _context.Rental
+                .Include(r => r.Client)
+                .Include(r => r.Office)
+                .Include(r => r.Vehicle)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (rental == null)
+            {
+                return NotFound();
+            }
+
+            return View(rental);
+        }
+
+        // GET: Rentals/Create
+        public IActionResult Create()
+        {
+            ViewData["Id"] = new SelectList(_context.Client, "Id", "FirstName");
+            ViewData["Id"] = new SelectList(_context.Office, "Id", "Address");
+            ViewData["Id"] = new SelectList(_context.Vehicle, "Id", "Brand");
             return View();
         }
-        //Create Post
+
+        // POST: Rentals/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddRental(Rental rental)
+        public async Task<IActionResult> Create([Bind("Id,Total,ClientId,CarId,OfficeId,Note,PickUp")] Rental rental)
         {
             if (ModelState.IsValid)
             {
-                _context.Rental.Add(rental);
-                _context.SaveChanges();
-                TempData["mssg"] = "Successfully added to the database";
-
-                return RedirectToAction("IndexRental");
+                _context.Add(rental);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            return View();
+            ViewData["Id"] = new SelectList(_context.Client, "Id", "FirstName", rental.Id);
+            ViewData["Id"] = new SelectList(_context.Office, "Id", "Address", rental.Id);
+            ViewData["Id"] = new SelectList(_context.Vehicle, "Id", "Brand", rental.Id);
+            return View(rental);
         }
-        //View Edit
-        public IActionResult EditRental(int? id)
+
+        // GET: Rentals/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
-            var rental = _context.Rental.Find(id);
+
+            var rental = await _context.Rental.FindAsync(id);
             if (rental == null)
             {
                 return NotFound();
             }
+            ViewData["Id"] = new SelectList(_context.Client, "Id", "FirstName", rental.Id);
+            ViewData["Id"] = new SelectList(_context.Office, "Id", "Address", rental.Id);
+            ViewData["Id"] = new SelectList(_context.Vehicle, "Id", "Brand", rental.Id);
             return View(rental);
         }
-        //Edit Update
+
+        // POST: Rentals/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateRental(Rental rental)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Total,ClientId,CarId,OfficeId,Note,PickUp")] Rental rental)
         {
+            if (id != rental.Id)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Rental.Update(rental);
-                _context.SaveChanges();
-                TempData["mssg"] = "Success";
-
-                return RedirectToAction("IndexRental");
+                try
+                {
+                    _context.Update(rental);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!RentalExists(rental.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
-            return View();
-        }
-        //View Delete
-        public IActionResult DeleteRental(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var rental = _context.Rental.Find(id);
-            if (rental == null)
-            {
-                return NotFound();
-            }
+            ViewData["Id"] = new SelectList(_context.Client, "Id", "FirstName", rental.Id);
+            ViewData["Id"] = new SelectList(_context.Office, "Id", "Address", rental.Id);
+            ViewData["Id"] = new SelectList(_context.Vehicle, "Id", "Brand", rental.Id);
             return View(rental);
         }
-        //Delete Vehicle
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult RemoveRental(int? id)
+
+        // GET: Rentals/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            var rental = _context.Rental.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var rental = await _context.Rental
+                .Include(r => r.Client)
+                .Include(r => r.Office)
+                .Include(r => r.Vehicle)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (rental == null)
             {
                 return NotFound();
             }
+
+            return View(rental);
+        }
+
+        // POST: Rentals/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var rental = await _context.Rental.FindAsync(id);
             _context.Rental.Remove(rental);
-            _context.SaveChanges();
-            TempData["mssg"] = "Deleted";
-            return RedirectToAction("IndexRental");
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool RentalExists(int id)
+        {
+            return _context.Rental.Any(e => e.Id == id);
         }
     }
 }

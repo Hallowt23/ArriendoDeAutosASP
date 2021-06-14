@@ -35,6 +35,10 @@ namespace ArriendoDeAutosASP.Models
         [Display(Name = "Price")]
         public int Price { get; set; }
 
+        [Required(ErrorMessage = "Required")]
+        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 6)]
+        [Display(Name = "Liscense Plate")]
+        public string LiscensePlate { get; set; }
 
         [Required(ErrorMessage = "Required")]
         [DataType(DataType.Date)]
