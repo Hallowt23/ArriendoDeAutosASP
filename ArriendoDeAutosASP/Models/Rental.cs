@@ -12,29 +12,15 @@ namespace ArriendoDeAutosASP.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Required, numbers only.")]
-        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 15)]
-        [Display(Name = "Rut")]
-        public string Rut { get; set; }
-
-        [Required(ErrorMessage = "Required")]
-        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 2)]
-        [Display(Name = "First Name")]
-        public string Brand { get; set; }
-
-        [Required(ErrorMessage = "Required")]
-        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 3)]
-        [Display(Name = "Last Name")]
-        public string Type{ get; set; }
-
-        [Required(ErrorMessage = "Required")]
-        [StringLength(10, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 1)]
-        [Display(Name = "")]
-        public string HP { get; set; }
-
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Total")]
         public int Total { get; set; }
+
+        [Required(ErrorMessage = "Required")]
+        [Display(Name = "Client Id")]
+        public int ClientId { get; set; }
+        [ForeignKey("Id")]
+        public Client Client { get; set; }
 
         [Required(ErrorMessage = "Required")]
         [Display(Name = "Car Id")]
@@ -48,13 +34,13 @@ namespace ArriendoDeAutosASP.Models
         [ForeignKey("Id")]
         public Office Office { get; set; }
 
+        [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 240)]
+        [Display(Name = "Note")]
+        public string Note { get; set; }
 
         [Required(ErrorMessage = "Required")]
         [DataType(DataType.Date)]
         [Display(Name = "Pick Up")]
         public DateTime PickUp { get; set; }
-
-
-
     }
 }
