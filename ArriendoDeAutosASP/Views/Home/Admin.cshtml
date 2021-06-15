@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Admin";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var punto = Punto8.Function1(); ;
 }
 
 
@@ -63,9 +65,11 @@
         <div class="col">
             <div class="card text-center" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Read me!</h5>
-                    <p class="card-text">...</p>
-                    <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Privacy">Click Me!</a>
+                    <h5 class="card-title">Static Function</h5>
+                    <!--<p class="card-text">...</p>-->
+                    <form action="">
+                        @punto
+                    </form>
                 </div>
             </div>
         </div>
