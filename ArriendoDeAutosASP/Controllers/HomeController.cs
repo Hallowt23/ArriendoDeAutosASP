@@ -1,4 +1,5 @@
 ﻿using ArriendoDeAutosASP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,6 +25,12 @@ namespace ArriendoDeAutosASP.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        
+        [Authorize]
+        public IActionResult Admin()
         {
             return View();
         }

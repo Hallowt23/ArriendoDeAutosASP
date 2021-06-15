@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArriendoDeAutosASP.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210614210258_Models")]
-    partial class Models
+    [Migration("20210615033857_V0.0.1")]
+    partial class V001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,7 @@ namespace ArriendoDeAutosASP.Migrations
             modelBuilder.Entity("ArriendoDeAutosASP.Models.Bill", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Active")
                         .HasColumnType("nvarchar(max)");

@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<ArriendoDeAutosASP.Models.Office>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "OfficeList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-center">Branch Offices</h1>
+<h1>Offices</h1>
 
-<p>
-    <a asp-action="Create"><button class="btn btn-lg btn-block btn-primary">Add Branch</button></a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -25,10 +22,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mannager)
-            </th>
-            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -45,14 +38,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mannager)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="text-white"><button type="button" class="btn btn-warning">Edit</button></a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="text-black-50"><button type="button" class="btn btn-secondary">Details</button></a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="text-white"><button type="button" class="btn btn-danger">Delete</button></a>
             </td>
         </tr>
 }

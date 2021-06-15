@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ArriendoDeAutosASP.Migrations
 {
-    public partial class Models : Migration
+    public partial class V001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -246,8 +246,7 @@ namespace ArriendoDeAutosASP.Migrations
                 name: "Bill",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     RentId = table.Column<int>(type: "int", nullable: false),
                     Iva = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<int>(type: "int", nullable: false),

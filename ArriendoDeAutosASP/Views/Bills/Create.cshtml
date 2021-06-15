@@ -27,14 +27,15 @@
                 <input asp-for="Total" class="form-control" />
                 <span asp-validation-for="Total" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
                 <input asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label asp-for="Active" class="control-label"></label>
-                <input asp-for="Active" class="form-control" />
+                <input asp-for="Active" type="radio"  value="Active"  >Yes
+                <input asp-for="Active" type="radio" value="Inactive"  >No
                 <span asp-validation-for="Active" class="text-danger"></span>
             </div>
             <div class="form-group">

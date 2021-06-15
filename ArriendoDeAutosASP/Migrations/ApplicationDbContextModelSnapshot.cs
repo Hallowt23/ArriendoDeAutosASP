@@ -22,9 +22,7 @@ namespace ArriendoDeAutosASP.Migrations
             modelBuilder.Entity("ArriendoDeAutosASP.Models.Bill", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("Active")
                         .HasColumnType("nvarchar(max)");

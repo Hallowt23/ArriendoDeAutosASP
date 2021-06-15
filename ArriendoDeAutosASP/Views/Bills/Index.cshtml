@@ -5,19 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Billing</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Rental)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Iva)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Total)
@@ -28,20 +23,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Rental.Id)
+                Boleta n°: @Html.DisplayFor(modelItem => item.Rental.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Iva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
+                $@Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -50,11 +42,13 @@
                 @Html.DisplayFor(modelItem => item.Active)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="text-white"><button type="button" class="btn btn-warning">Edit</button></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="text-white"><button type="button" class="btn btn-danger">Delete</button></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<p>
+    <a asp-action="Create"><button class="btn btn-primary btn-block btn-lg">¿Missing Bill?</button></a>
+</p>

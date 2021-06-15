@@ -5,11 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<!--<p>
+    <button asp-action="Create" class="btn btn-success btn-block btn-lg">Rent a Car</button>
+</p>-->
+<h2 class="text-center">Previous Orders</h2>
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +30,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.PickUp)
             </th>
-            <th></th>
+            <th>Acctions</th>
         </tr>
     </thead>
     <tbody>
@@ -47,8 +46,8 @@
                 @Html.DisplayFor(modelItem => item.Vehicle.Model) /
                 @Html.DisplayFor(modelItem => item.Vehicle.Price)
                 @{
-                    int x = item.Vehicle.Price * item.Days;
-                }Total: $@x
+                    int total = item.Vehicle.Price * item.Days;
+                }Total: $@total
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Office.City),
@@ -64,10 +63,10 @@
                 @Html.DisplayFor(modelItem => item.PickUp)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a asp-controller="Bills" asp-action="GenerateBill" asp-route-id="@item.Id">Pay</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="text-white"><button type="button" class="btn btn-warning">Edit</button></a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="text-black-50"><button type="button" class="btn btn-secondary">Details</button></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="text-white"><button type="button" class="btn btn-danger">Delete</button></a>
+                <a asp-controller="Bills" asp-action="AutoCreate" asp-route-id="@item.Id" asp-route-rentid="@item.Id" asp-route-total="@total" class="text-white"><button class="btn btn-info">Generate Bill</button></a>
             </td>
         </tr>
 }
