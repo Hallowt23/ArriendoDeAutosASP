@@ -4,24 +4,70 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Admin</h1>
 
-<div class="">
-    <ul class="">
-        <li class="">
-            <a class="text-dark" asp-area="" asp-controller="Vehicles" asp-action="Index">Vehicles</a>
-        </li>
-        <li class="">
-            <a class="text-dark" asp-area="" asp-controller="Offices" asp-action="Index">Offices</a>
-        </li>
-        <li class="">
-            <a class="text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Clients</a>
-        </li>
-        <li class="">
-            <a class="text-dark" asp-area="" asp-controller="Rentals" asp-action="Index">Rent a Car</a>
-        </li>
-        <li class="">
-            <a class="text-dark" asp-area="" asp-controller="Bills" asp-action="Index">Bills</a>
-        </li>
-    </ul>
+
+<div class="container">
+    <h1 class="text-center">Administration Area</h1>
+    <div class="row">
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Offices</h5>
+                    <p class="card-text text-center">Manage existing or new Offices, edit or delete them from the Db</p>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Offices" asp-action="Index">Click Me!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Vehicles</h5>
+                    <p class="card-text text-center">Manage existing or new vehicles, edit or delete them from the Db</p>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Vehicles" asp-action="Index">Click Me!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Clients</h5>
+                    <p class="card-text">Manage existing or new clients, edit or delete them from the Db.</p>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Clients" asp-action="Index">Click me!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="container">
+    <h1 class="text-center">Records</h1>
+    <div class="row">
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Rented Cars</h5>
+                    <p class="card-text">Track any rental ticket.</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Rentals" asp-action="Index">Click Me!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Bills</h5>
+                    <p class="card-text">Accountability</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Bills" asp-action="Index">Click Me!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card text-center" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Read me!</h5>
+                    <p class="card-text">...</p>
+                    <a class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Privacy">Click Me!</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
