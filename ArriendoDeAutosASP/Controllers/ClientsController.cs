@@ -59,7 +59,7 @@ namespace ArriendoDeAutosASP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Rut,FirstName,LastName,Liscense,Sex,BirthDay")] Client client)
+        public async Task<IActionResult> Create([Bind("Id,Rut,FirstName,LastName,Liscense,Gender,BirthDay")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace ArriendoDeAutosASP.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Rut,FirstName,LastName,Liscense,Sex,BirthDay")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Rut,FirstName,LastName,Liscense,Gender,BirthDay")] Client client)
         {
             if (id != client.Id)
             {

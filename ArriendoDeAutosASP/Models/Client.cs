@@ -32,8 +32,8 @@ namespace ArriendoDeAutosASP.Models
         [Display(Name = "Liscense")]
         public string Liscense { get; set; }
 
-        [Display(Name = "Sex")]
-        public string Sex { get; set; }
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
 
         [Required(ErrorMessage = "Required")]
         [DataType(DataType.Date)]

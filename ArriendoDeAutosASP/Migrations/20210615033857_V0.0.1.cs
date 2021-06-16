@@ -56,7 +56,7 @@ namespace ArriendoDeAutosASP.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Liscense = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
