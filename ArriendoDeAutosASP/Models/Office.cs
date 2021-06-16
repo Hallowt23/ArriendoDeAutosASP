@@ -32,7 +32,7 @@ namespace ArriendoDeAutosASP.Models
 
         [Required(ErrorMessage = "Required")]
         [StringLength(50, ErrorMessage = "Between {2} and {1} letters", MinimumLength = 5)]
-        [Display(Name = "Mannager")]
-        public string Mannager { get; set; }
+        [Display(Name = "Manager")]
+        public string Manager { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace ArriendoDeAutosASP.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Country,City,Address,PhoneNumber,Mannager")] Office office)
+        public async Task<IActionResult> Create([Bind("Id,Country,City,Address,PhoneNumber,Manager")] Office office)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace ArriendoDeAutosASP.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Country,City,Address,PhoneNumber,Mannager")] Office office)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Country,City,Address,PhoneNumber,Manager")] Office office)
         {
             if (id != office.Id)
             {

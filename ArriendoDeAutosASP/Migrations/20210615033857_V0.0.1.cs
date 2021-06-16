@@ -74,7 +74,7 @@ namespace ArriendoDeAutosASP.Migrations
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<int>(type: "int", nullable: false),
-                    Mannager = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Manager = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
