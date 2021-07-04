@@ -11,7 +11,7 @@ namespace ArriendoDeAutosASP.Models
     {
         public static String Function1()
         {
-            String mssg = " Hola! Yo soy una Public Static String Function." +
+            String mssg = " Hola! Yo soy una Public Static String Function. " +
                 "Vivo en una clase que no cumple nada mas que mostrarme a mi, " +
                 "Ademas, cumplo la funcion de completar el pto 8 de la prueba n3. " +
                 "Besitos.";
