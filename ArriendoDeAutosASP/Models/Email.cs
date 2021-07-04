@@ -17,7 +17,7 @@ namespace ArriendoDeAutosASP.Models
         public String EmailFrom { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [Display(Name = "Tor")]
+        [Display(Name = "To")]
         public String EmailTo { get; set; }
 
         [Required(ErrorMessage = "Required")]
@@ -30,7 +30,7 @@ namespace ArriendoDeAutosASP.Models
 
         [Required(ErrorMessage = "Required")]
         [DataType(DataType.DateTime)]
-        [Display(Name = "ModeModel Yearr")]
+        [Display(Name = "Date & Time")]
         public DateTime DateTime { get; set; }
     }
 }

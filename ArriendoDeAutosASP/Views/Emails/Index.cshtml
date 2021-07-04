@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ArriendoDeAutosASP.Models.Email>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Emails</h1>
+
+<p>
+    <!--<a asp-action="Create">New Email</a>-->
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailSubject)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailSubject)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

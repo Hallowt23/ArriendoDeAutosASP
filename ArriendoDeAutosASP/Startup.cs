@@ -38,7 +38,10 @@ namespace ArriendoDeAutosASP
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            //Email
+        }
+
+        /*public void ConfigureMailer(IServiceCollection services)
+        {
             var from = Configuration.GetSection("Mail")["Form"];
             var gmailSender = Configuration.GetSection("Gmail")["Sender"];
             var gmailPassword = Configuration.GetSection("Gmail")["Password"];
@@ -51,7 +54,7 @@ namespace ArriendoDeAutosASP
                 Credentials = new NetworkCredential(gmailSender, gmailPassword),
                 EnableSsl = true,
             });
-        }
+        }*/
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
