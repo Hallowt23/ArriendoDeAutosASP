@@ -38,6 +38,27 @@ namespace ArriendoDeAutosASP.Controllers
             return View();
         }
 
+        //public async Task<IActionResult> Contact()
+        //{
+        //    var sender = new SmtpSender(() => new System.Net.Mail.SmtpClient("smtp.gmail.com")
+        //    {
+        //        UseDefaultCredentials = false,
+        //        Port = 587,
+        //        Credentials = new NetworkCredential("mail@gmail.com", "Password"),
+        //        EnableSsl = true,
+        //    });
+        //    Email.DefaultSender = sender;
+
+        //    var email = Email
+        //        .From("mail@gmail.com", "Tay Rent a Car")
+        //        .To("mail@gmail.com", "Tay")
+        //        .Subject("Questions")
+        //        .Body("This is the Mail Body");
+
+        //    await email.SendAsync();
+        //    return view();
+        //}
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

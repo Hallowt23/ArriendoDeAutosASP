@@ -43,6 +43,7 @@ namespace ArriendoDeAutosASP
             var gmailSender = Configuration.GetSection("Gmail")["Sender"];
             var gmailPassword = Configuration.GetSection("Gmail")["Password"];
             var gmailPort = Convert.ToInt32(Configuration.GetSection("Gmail")["Port"]);
+
             services.AddFluentEmail(gmailSender, from).AddRazorRenderer().AddSmtpSender(new SmtpClient("smtp.gmail.com")
             {
                 UseDefaultCredentials = false,

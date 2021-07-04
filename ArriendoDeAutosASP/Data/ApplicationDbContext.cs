@@ -18,5 +18,6 @@ namespace ArriendoDeAutosASP.Data
         public DbSet<Rental> Rental { get; set; }
         public DbSet<Client> Client { get; set; }
         public DbSet<Bill> Bill { get; set; }
+        public DbSet<Email> Email { get; set; }
     }
 }
