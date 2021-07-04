@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace ArriendoDeAutosASP
@@ -27,14 +29,27 @@ namespace ArriendoDeAutosASP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //DB
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
+            //Users
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            //Email
+            var from = Configuration.GetSection("Mail")["Form"];
+            var gmailSender = Configuration.GetSection("Gmail")["Sender"];
+            var gmailPassword = Configuration.GetSection("Gmail")["Password"];
+            var gmailPort = Convert.ToInt32(Configuration.GetSection("Gmail")["Port"]);
+            services.AddFluentEmail(gmailSender, from).AddRazorRenderer().AddSmtpSender(new SmtpClient("smtp.gmail.com")
+            {
+                UseDefaultCredentials = false,
+                Port = gmailPort,
+                Credentials = new NetworkCredential(gmailSender, gmailPassword),
+                EnableSsl = true,
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

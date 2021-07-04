@@ -1,4 +1,6 @@
 ﻿using ArriendoDeAutosASP.Models;
+using FluentEmail.Core;
+using FluentEmail.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ArriendoDeAutosASP.Controllers
@@ -19,7 +22,7 @@ namespace ArriendoDeAutosASP.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public  IActionResult Index()
         {
             return View();
         }
