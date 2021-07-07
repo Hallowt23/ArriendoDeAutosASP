@@ -164,7 +164,7 @@ namespace ArriendoDeAutosASP.Controllers
             {
                 UseDefaultCredentials = false,
                 Port = 587,
-                Credentials = new NetworkCredential("", ""),
+                Credentials = new NetworkCredential("email", "password"), //Credenciales
                 EnableSsl = true,
             });
             FluentEmail.Core.Email.DefaultSender = sender;
@@ -177,12 +177,11 @@ namespace ArriendoDeAutosASP.Controllers
              * Por ultimo, no dejare ninguna credencial ...
              */
             var emailHead = FluentEmail.Core.Email
-                //.From(email.EmailTo, email.EmailFrom)
-                .From(email.EmailFrom, email.EmailFrom)
-                //.To(email.EmailFrom)
+                .From(email.EmailFrom, "Consultas")
                 .To(email.EmailTo)
                 .Subject(email.EmailSubject)
-                .Body(email.EmailBody + " / DateTime: " + email.DateTime);
+                .Body(email.EmailBody + " / DateTime: " + email.DateTime)
+                .ReplyTo(email.EmailFrom);
             try
             {
                 await emailHead.SendAsync();

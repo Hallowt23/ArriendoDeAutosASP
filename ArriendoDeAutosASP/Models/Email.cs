@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-//PODRIA TENER QUE BORRAR ESTO
 namespace ArriendoDeAutosASP.Models
 {
     public class Email
